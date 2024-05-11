@@ -1,12 +1,12 @@
 import React, { useId } from 'react'
 
-const Inbox = ({
+const InputBox = ({
     label,
     amount,
     onAmountChange,
     onCurrencyChange,
-    currencyOptions = [], //Empty in case of default
-    selectCurrency="usd", //"usd" in case of default
+    currencyOptions = [],  //Empty in case of default
+    selectCurrency="usd",  //"usd" in case of default
     amountDisable= false,
     currencyDisable=false,
     className=""
@@ -50,9 +50,7 @@ const Inbox = ({
 
 export default InputBox;
 
-
 //Try to make a index.js in components folder only to import all the components there and export them and then import only the index.js file in other modules to get all the components from only 1 file that is index.js
-
 
 //In case of confusion for the map() function
 //{currencyOptions.map((curr) => {

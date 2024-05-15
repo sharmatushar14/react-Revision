@@ -12,20 +12,34 @@ function App() {
     //Cant use async in the callback function of useEffect,
     //Hence using Immediately Invoked Function Expression and remember
     //To use ; before IIFE
+    const controller = new AbortController()
+    //It is not used for any throttling or debouncing purposes but for race conditions for APIs request that is
+    //being fired upon every keystroke, it only sends the final API req
     ;(async()=>{
     try {
         setError(false)
         setLoading(true)
-        const response = await axios.get("http://localhost:3000/api/products?search=" + search)
+        const response = await axios.get("http://localhost:3000/api/products?search=" + search, {
+          signal: controller.signal
+        })
         console.log(response.data);
         setProducts(response.data)
         setLoading(false);
     } catch (error) {
+        if(axios.isCancel(error)){
+          console.log("Request Canceled", error.message)
+          return;
+        }
         setError(true)
         setLoading(false)
     }
     })()
-  }, [])
+
+    //Cleanup
+    return () => {
+      controller.abort()
+    }
+  }, [search])
 
   if(error){
     return <h1>Something went wrong</h1>
@@ -34,6 +48,7 @@ function App() {
   if(loading){
     return <h1>Loading...</h1>
   }
+  let searchTimeout;
 
   return (
    <>

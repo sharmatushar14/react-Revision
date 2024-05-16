@@ -22,6 +22,10 @@ function App() {
         const response = await axios.get("http://localhost:3000/api/products?search=" + search, {
           signal: controller.signal
         })
+        //The await keyword indeed ensures that the asynchronous operation (the Axios request) 
+        //completes before moving to the next line within the async function. However, the subsequent lines are not blocked from execution while awaiting the completion of the Axios request.
+        //Once the Axios request completes, the await keyword resolves, and the response is received. 
+        //Then, setProducts(response.data) is called to update the state with the fetched data.
         console.log(response.data);
         setProducts(response.data)
         setLoading(false);
@@ -48,7 +52,6 @@ function App() {
   if(loading){
     return <h1>Loading...</h1>
   }
-  let searchTimeout;
 
   return (
    <>
@@ -56,6 +59,14 @@ function App() {
     Axios Practice 
    </h1>
    <h2>Number of Products are: {products.length}</h2>
+   <h2> Number of Products you searched:</h2>
+   <ul>
+    {products.map(product => (
+      <li key={product.id}>
+        {product.name}
+      </li>
+    ))}
+   </ul>
    <input type='text' placeholder='Search'
    value={search}
    onChange={(e)=>setSearch(e.target.value)}

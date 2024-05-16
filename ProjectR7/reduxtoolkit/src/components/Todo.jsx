@@ -48,3 +48,12 @@ const Todo = () => {
 }
 
 export default Todo
+
+
+//Learned from mistakes:
+//onClick={() => dispatch(removeTodo(todo.id))}: This approach creates an inline arrow function that calls dispatch with removeTodo action and todo.id as arguments. 
+//This method is commonly used when you need to pass arguments to the event handler.
+
+//Cannot do onClick={dispatch(removeTodo(todo.id))}
+//This approach won't work as intended because you're invoking 
+//the dispatch function immediately when the component renders, not when the button is clicked.

@@ -15,7 +15,8 @@ function App() {
     const controller = new AbortController()
     //It is not used for any throttling or debouncing purposes but for race conditions for APIs request that is
     //being fired upon every keystroke, it only sends the final API req
-    ;(async()=>{
+    let timer;
+    const fetchData =  async()=>{
     try {
         setError(false)
         setLoading(true)
@@ -37,13 +38,26 @@ function App() {
         setError(true)
         setLoading(false)
     }
-    })()
+  }
+
+    const delayedFetchedData = () =>{
+      clearTimeout(timer)
+      timer = setTimeout(()=>{
+        fetchData()
+      }, 1000)
+    }
+
+    delayedFetchedData();
 
     //Cleanup
     return () => {
       controller.abort()
+      clearTimeout(timer);
     }
   }, [search])
+
+  //This debounce mechanism helps to reduce the number of API calls and unnecessary re-renders of the component. 
+  //Adjust the delay time as needed based on your requirements.
 
   if(error){
     return <h1>Something went wrong</h1>

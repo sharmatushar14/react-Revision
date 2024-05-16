@@ -57,3 +57,5 @@ export default Todo
 //Cannot do onClick={dispatch(removeTodo(todo.id))}
 //This approach won't work as intended because you're invoking 
 //the dispatch function immediately when the component renders, not when the button is clicked.
+
+//So whenever you need to pass arguments in event handlers use arrow functions as callback

@@ -8,7 +8,7 @@ const AddTodo = () => {
     const dispatch = useDispatch()
     const addToSubmitHandler= (e)=>{
         e.preventDefault();
-        dispatch(addTodo(input))
+        dispatch(addTodo(input)) //text: action.payload
         setInput('') //Cleaning the input field once submitted for the next input use
     }
 

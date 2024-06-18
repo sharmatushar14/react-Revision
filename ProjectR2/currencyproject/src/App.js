@@ -12,6 +12,7 @@ function App() {
   const currencyInfo = useCurrencyInfo(from) //From which currency do you wish to convert from
 
   const options = Object.keys(currencyInfo) //keys are all currencies with their values as conversion
+  console.log(options);
 
   const swap = ()=>{
     setFrom(to)
@@ -42,7 +43,7 @@ function App() {
                     <InputBox
                         label="From"
                         amount={amount}
-                        currencyOptions={options}
+                        currencyOptions={options} //Passing the array
                         onCurrencyChange={(currency)=> setFrom(currency)}
                         selectCurrency={from}
                         onAmountChange={(amount)=>setAmount(amount)}

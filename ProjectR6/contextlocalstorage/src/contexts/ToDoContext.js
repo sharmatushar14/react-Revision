@@ -15,7 +15,7 @@ export const TodoContext = createContext({
 })
 
 export const useTodo = ()=>{
-    return useContext(TodoContext)
+    return useContext(TodoContext) 
 }
 //By defining it this way, we ensure that "useTodo" is callable within a component, and when it is invoked, it returns the value obtained from "TodoContext" 
 

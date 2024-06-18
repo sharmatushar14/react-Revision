@@ -7,13 +7,15 @@ function App() {
   const [password, setPassword] = useState("")
 
   const passwordGenerator = useCallback(()=>{
+    //Memoize the function and avoids the function to re-render at every component re-render until the dependencies changes
+    //It will return the memoized version of the callback of the function
     let pass = ""
     let str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     if(numberAllowed) str+= "1234567890"
     if(charAllowed) str+= "!@#$%^&*-_+=[]{}~`"
     for(let i=1; i<=length; i++){
       let char = Math.floor(Math.random() * str.length + 1)
-      pass += str.charAt(char)
+      pass += str.charAt(char) //Randomly str.charAt(1)
     }
     setPassword(pass)
   }, [length, numberAllowed, charAllowed, setPassword])
@@ -24,9 +26,12 @@ function App() {
 
   //useRef hook
   const passwordRef = useRef(null);
+  //useRef hook is used to create a reference to a DOM element or value that persists accross re-renders and doesnt cause
+  //the component to render when the value changes  
 
   const copyPasswordToClip = useCallback(()=>{
     passwordRef.current?.select();
+    //useRef allows direct access to the DOM element to call methods like select
     window.navigator.clipboard.writeText(password)
     setCopied((prev)=> {
       return !prev;

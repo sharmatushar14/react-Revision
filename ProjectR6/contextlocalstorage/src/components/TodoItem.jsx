@@ -4,7 +4,7 @@ import { useTodo } from "../contexts/ToDoContext";
 function TodoItem({ todo }) {
     const [isTodoEditable,setIsTodoEditable] = useState(false)
     const [todoMsg, setTodoMsg] = useState(todo.todo)
-    const {updateTodo, deleteTodo, toggleComplete} = useTodo()
+    const {updateTodo, deleteTodo, toggleComplete} = useTodo() //Using useContext
     
     const editTodo = ()=>{
         updateTodo(todo.id, {...todo, todo: todoMsg})
@@ -34,7 +34,7 @@ function TodoItem({ todo }) {
                 } ${todo.completed ? "line-through" : ""}`}
                 value={todoMsg}
                 onChange={(e) => setTodoMsg(e.target.value)}
-                readOnly={!isTodoEditable}
+                readOnly={!isTodoEditable} //This will become active to edit if isTodoEditable is true
             />
             {/* Edit, Save Button */}
             <button

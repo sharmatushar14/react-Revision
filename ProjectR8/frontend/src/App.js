@@ -9,9 +9,7 @@ function App() {
   const [search, setSearch] = useState("")
 
   useEffect(()=>{
-    //Cant use async in the callback function of useEffect,
-    //Hence using Immediately Invoked Function Expression and remember
-    //To use ; before IIFE
+    //Cant use async in the callback function of useEffect, because useEffect expects a return cleanup function sync.
     const controller = new AbortController()
     //It is not used for any throttling or debouncing purposes but for race conditions for APIs request that is
     //being fired upon every keystroke, it only sends the final API req
@@ -27,7 +25,8 @@ function App() {
         //completes before moving to the next line within the async function. However, the subsequent lines are not blocked from execution while awaiting the completion of the Axios request.
         //Once the Axios request completes, the await keyword resolves, and the response is received. 
         //Then, setProducts(response.data) is called to update the state with the fetched data.
-        console.log(response.data);
+        console.log(response);
+        // console.log(response.data);
         setProducts(response.data)
         setLoading(false);
     } catch (error) {
@@ -57,7 +56,6 @@ function App() {
   }, [search])
 
   //This debounce mechanism helps to reduce the number of API calls and unnecessary re-renders of the component. 
-  //Adjust the delay time as needed based on your requirements.
 
   if(error){
     return <h1>Something went wrong</h1>

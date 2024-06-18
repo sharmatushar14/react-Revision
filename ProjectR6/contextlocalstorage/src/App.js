@@ -4,7 +4,13 @@ import TodoForm from './components/TodoForm'
 import TodoItem from './components/TodoItem'
 
 export default function App() {
-  const [todos, setTodos] = useState([]) //Setting the whole todos array with all todos
+  const [todos, setTodos] = useState([]);
+  // const [todos, setTodos] = useState(() => {
+  //   const storedTodos = localStorage.getItem('todos');
+  //   return storedTodos ? JSON.parse(storedTodos) : [];
+  // });  //If you are not using the initial useEffect hook without any dependencies 
+  //(which means it runs only once after the initial render), 
+  //and you want to ensure that todos are not overwritten by an empty array during the initial render
 
   const addTodo = (todo)=>{
     setTodos((prev)=> [{id: Date.now(),...todo}, ...prev]) //Spreading the till now array data and adding the new data in front 
@@ -29,12 +35,16 @@ export default function App() {
     const todos = JSON.parse(localStorage.getItem("todos"))
     if(todos && todos.length > 0){
       //todos here will be an array with objects as individual todos
-      setTodos(todos)
+      setTodos(todos);
+      console.log("Use Effect without dependencies triggered");
+      //ToDos are preserved as we use useEffect after refresh too and we get to see the previous todos
     }  
   }, [])
+ 
 
   useEffect(()=>{
     localStorage.setItem("todos", JSON.stringify(todos))
+    console.log("Todos set Flag");
   }, [todos])
 
 
